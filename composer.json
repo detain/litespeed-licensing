@@ -1,0 +1,23 @@
+{
+    "name": "detain/litespeed-licensing",
+    "type": "library",
+    "description": "Litespeed Licensing Class",
+    "keywords": ["litespeed","administration","license"],
+    "license": "LGPL-2.1",
+    "authors": [
+        {
+            "name": "Joe Huss",
+            "homepage": "https://my.interserver.net/"
+        }
+    ],
+    "config": {
+        "minimum-stability": "dev"
+    },
+    "require": {
+        "php": ">=5.0.0",
+        "ext-soap": "*"
+    },
+    "autoload": {
+        "psr-4": {"Detain\\Litespeed\\": "src/"}
+    }
+}
