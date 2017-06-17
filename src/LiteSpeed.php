@@ -27,7 +27,7 @@ class LiteSpeed {
 	public $valid_cpu = ['1', '2', '4', '8', 'V', 'U'];
 	public $valid_period = ['monthly', 'yearly', 'owned'];
 	public $valid_payment = ['credit', 'creditcard'];
-	public $raw_response;
+	public $rawResponse;
 
 	/**
 	 * @param $login
@@ -327,15 +327,15 @@ class LiteSpeed {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 		// Get response from the server.
-		$this->raw_response = curl_exec($ch);
+		$this->rawResponse = curl_exec($ch);
 
-		if (!$this->raw_response) {
+		if (!$this->rawResponse) {
 			$this->error[] = 'There was some error in connecting to Softaculous. This may be because of no internet connectivity at your end.';
 			return false;
 		}
 
 		// Extract the response details.
-		$this->response = xml2array($this->raw_response);
+		$this->response = xml2array($this->rawResponse);
 		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, true), __LINE__, __FILE__);
 		if (empty($this->response['error'])) {
 			unset($this->response['error']);
