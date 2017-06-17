@@ -14,8 +14,7 @@
  *
  * @access public
  */
-class LiteSpeed
-{
+class LiteSpeed {
 
 	public $login = '';
 	public $password = '';
@@ -25,8 +24,8 @@ class LiteSpeed
 	public $params = [];
 	public $response = [];
 	public $valid_products = ['LSWS', 'LSLB'];
-	public $valid_cpu = ['1','2','4','8','V','U'];
-	public $valid_period = ['monthly','yearly','owned'];
+	public $valid_cpu = ['1', '2', '4', '8', 'V', 'U'];
+	public $valid_period = ['monthly', 'yearly', 'owned'];
 	public $valid_payment = ['credit', 'creditcard'];
 	public $raw_response;
 
@@ -56,74 +55,74 @@ class LiteSpeed
 	}
 
 	/**
-	* LiteSpeed Order License Return
-	* 		* 	If any errors occur during this process, <result> will contain “error” and <message>
-	* 	will contain a detailed description:
-	* 		<LiteSpeed_eService>
-	* 			<action>Order</action>
-	* 			<result>error</result>
-	* 			<message>Invalid cpu!</message>
-	* 		</LiteSpeed_eService>
-	* 	If the transaction cannot be completed, <result> will be “incomplete”. For example, if
-	* 	payment method is “credit”, but there is not enough credit in your account, or if payment method
-	* 	is “creditcard”, but the charge cannot go through, then the transaction will not be completed
-	* 	and <result> will display “incomplete”. <license_id> and <invoice> will be provided. You will
-	* 	need to login to LiteSpeed’s online store and pay the invoice to finish the order.
-	* 		If payment method is “credit”, but not enough credit is available to your account:
-	* 			<LiteSpeed_eService>
-	* 				<action>Order</action>
-	* 					<license_id>6066</license_id>
-	* 				<license_type>WS_L_V</license_type>
-	* 				<invoice_id>12466</invoice_id>
-	* 				<result>incomplete</result>
-	* 				<message>need to pay invoice first</message>
-	* 			</LiteSpeed_eService>
-	* 		If payment method is “creditcard”, but the attempted credit card payment failed:
-	* 			<LiteSpeed_eService>
-	* 				<action>Order</action>
-	* 				<license_id>9329</license_id>
-	* 				<license_type>WS_L_V</license_type>
-	* 				<invoice_id>20568</invoice_id>
-	* 				<result>incomplete</result>
-	* 				<message>need to pay invoice first, credit card payment failed</message>
-	* 			</LiteSpeed_eService>
-	* 	If the transaction is successful, which should happen for the majority of cases, you will get a
-	* 	serial number back. You can parse the message to get the serial number and create your own script
-	* 	for installation. You will still receive the same confirmation email and serial number emails as
-	* 	if you ordered online. There will be no <invoice_id> if the charge was paid with credit.
-	* 		<LiteSpeed_eService>
-	* 			<action>Order</action>
-	* 			< license_id>6067</ license_id>
-	* 			<license_type>WS_L_V</license_type>
-	* 			<invoice_id>12466</invoice_id>
-	* 			< license_serial>gv06-kXsU-SHBr-pL4N</license_serial>
-	* 			<result>success</result>
-	* 			<message>new order automatically accepted</message>
-	* 		</LiteSpeed_eService>
-	*
-	*/
+	 * LiteSpeed Order License Return
+	 * 		* 	If any errors occur during this process, <result> will contain “error” and <message>
+	 * 	will contain a detailed description:
+	 * 		<LiteSpeed_eService>
+	 * 			<action>Order</action>
+	 * 			<result>error</result>
+	 * 			<message>Invalid cpu!</message>
+	 * 		</LiteSpeed_eService>
+	 * 	If the transaction cannot be completed, <result> will be “incomplete”. For example, if
+	 * 	payment method is “credit”, but there is not enough credit in your account, or if payment method
+	 * 	is “creditcard”, but the charge cannot go through, then the transaction will not be completed
+	 * 	and <result> will display “incomplete”. <license_id> and <invoice> will be provided. You will
+	 * 	need to login to LiteSpeed’s online store and pay the invoice to finish the order.
+	 * 		If payment method is “credit”, but not enough credit is available to your account:
+	 * 			<LiteSpeed_eService>
+	 * 				<action>Order</action>
+	 * 					<license_id>6066</license_id>
+	 * 				<license_type>WS_L_V</license_type>
+	 * 				<invoice_id>12466</invoice_id>
+	 * 				<result>incomplete</result>
+	 * 				<message>need to pay invoice first</message>
+	 * 			</LiteSpeed_eService>
+	 * 		If payment method is “creditcard”, but the attempted credit card payment failed:
+	 * 			<LiteSpeed_eService>
+	 * 				<action>Order</action>
+	 * 				<license_id>9329</license_id>
+	 * 				<license_type>WS_L_V</license_type>
+	 * 				<invoice_id>20568</invoice_id>
+	 * 				<result>incomplete</result>
+	 * 				<message>need to pay invoice first, credit card payment failed</message>
+	 * 			</LiteSpeed_eService>
+	 * 	If the transaction is successful, which should happen for the majority of cases, you will get a
+	 * 	serial number back. You can parse the message to get the serial number and create your own script
+	 * 	for installation. You will still receive the same confirmation email and serial number emails as
+	 * 	if you ordered online. There will be no <invoice_id> if the charge was paid with credit.
+	 * 		<LiteSpeed_eService>
+	 * 			<action>Order</action>
+	 * 			< license_id>6067</ license_id>
+	 * 			<license_type>WS_L_V</license_type>
+	 * 			<invoice_id>12466</invoice_id>
+	 * 			< license_serial>gv06-kXsU-SHBr-pL4N</license_serial>
+	 * 			<result>success</result>
+	 * 			<message>new order automatically accepted</message>
+	 * 		</LiteSpeed_eService>
+	 *
+	 */
 
 	/**
-	* Order a LiteSpeed License
-	*
-	* @param mixed $product  Product type. Available values: “LSWS” or “LSLB”.
-	* @param mixed $cpu What kind of license. Available values: “1”: 1-CPU license, “2”: 2-CPU license,  “4”: 4-CPU license, “8”: 8-CPU license, “V”: VPS license, “U”: Ultra-VPS license (Available LSWS 4.2.2 and above.), If <order_product> is “LSLB”, <order_cpu> is not required.
-	* @param mixed $period  Renewal period. Available values: “monthly”, “yearly”, “owned”.
-	* @param mixed $payment Payment method. Available values: “credit”: Use account credit. User can utilize “Add funds” function to pre-deposit money, which will show up as account credit.      “creditcard”: Use credit card to pay. The credit card is pre-defined in the account.  If there is available credit in the account, credit will be applied first, even when the payment method is set to “creditcard”.
-	* @param mixed $cvv  (optional) Credit card security code. Try not to set this field. Only if your bank requires this (meaning that the transaction will fail without it) should you then supply this field. CVV code is not stored in the system, so if you need to set it, you have to set this field every time. Other information from your credit card will be taken from your user account.
-	* @param mixed $promocode  (optional) Promotional code. If you have a pre-assigned promotional code registered to your account, then you can set it here. Promotional codes are exclusive to each client. If your account is entitled to discounts at the invoice level, you do not need a promotional code.
-	* @return array array with the output result. see above for description of output.
-	* 		array (
-	* 			'LiteSpeed_eService' => array (
-	* 				'action' => 'Order',
-	* 				'license_id' => '36514',
-	* 				'license_type' => 'WS_L_1',
-	* 				'invoice_id' => '86300',
-	* 				'result' => 'incomplete',
-	* 				'message' => 'Invoice 86300 not paid. ',
-	* 			),
-	* 		)
-	*/
+	 * Order a LiteSpeed License
+	 *
+	 * @param mixed $product  Product type. Available values: “LSWS” or “LSLB”.
+	 * @param mixed $cpu What kind of license. Available values: “1”: 1-CPU license, “2”: 2-CPU license,  “4”: 4-CPU license, “8”: 8-CPU license, “V”: VPS license, “U”: Ultra-VPS license (Available LSWS 4.2.2 and above.), If <order_product> is “LSLB”, <order_cpu> is not required.
+	 * @param mixed $period  Renewal period. Available values: “monthly”, “yearly”, “owned”.
+	 * @param mixed $payment Payment method. Available values: “credit”: Use account credit. User can utilize “Add funds” function to pre-deposit money, which will show up as account credit.      “creditcard”: Use credit card to pay. The credit card is pre-defined in the account.  If there is available credit in the account, credit will be applied first, even when the payment method is set to “creditcard”.
+	 * @param mixed $cvv  (optional) Credit card security code. Try not to set this field. Only if your bank requires this (meaning that the transaction will fail without it) should you then supply this field. CVV code is not stored in the system, so if you need to set it, you have to set this field every time. Other information from your credit card will be taken from your user account.
+	 * @param mixed $promocode  (optional) Promotional code. If you have a pre-assigned promotional code registered to your account, then you can set it here. Promotional codes are exclusive to each client. If your account is entitled to discounts at the invoice level, you do not need a promotional code.
+	 * @return array array with the output result. see above for description of output.
+	 * 		array (
+	 * 			'LiteSpeed_eService' => array (
+	 * 				'action' => 'Order',
+	 * 				'license_id' => '36514',
+	 * 				'license_type' => 'WS_L_1',
+	 * 				'invoice_id' => '86300',
+	 * 				'result' => 'incomplete',
+	 * 				'message' => 'Invoice 86300 not paid. ',
+	 * 			),
+	 * 		)
+	 */
 	public function order($product, $cpu = false, $period = 'monthly', $payment = 'credit', $cvv = false, $promocode = false) {
 		if (!in_array($product, $this->valid_products)) {
 			return array('error' => 'Invalid Product');
@@ -305,7 +304,7 @@ class LiteSpeed
 			curl_setopt($ch, CURLOPT_POST, true);
 			$pstring = '';
 			foreach ($this->params as $param => $value) {
-				$pstring .= '&' . $param . '=' . $value . '';
+				$pstring .= '&'.$param.'='.$value.'';
 			}
 			$pstring = mb_substr($pstring, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $pstring);
@@ -313,10 +312,10 @@ class LiteSpeed
 			curl_setopt($ch, CURLOPT_POST, false);
 			$pstring = '';
 			foreach ($this->params as $param => $value) {
-				$pstring .= '&' . $param . '=' . $value . '';
+				$pstring .= '&'.$param.'='.$value.'';
 			}
 			$pstring = mb_substr($pstring, 1);
-			$url .= '?' . $pstring;
+			$url .= '?'.$pstring;
 		}
 		myadmin_log('licenses', 'info', "LiteSpeed URL: $url\npstring: $pstring\n", __LINE__, __FILE__);
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -337,7 +336,7 @@ class LiteSpeed
 
 		// Extract the response details.
 		$this->response = xml2array($this->raw_response);
-		myadmin_log('licenses', 'info', 'LiteSpeed Response ' . var_export($this->response, true), __LINE__, __FILE__);
+		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, true), __LINE__, __FILE__);
 		if (empty($this->response['error'])) {
 			unset($this->response['error']);
 			return $this->response;
