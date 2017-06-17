@@ -11,12 +11,20 @@
         }
     ],
     "config": {
+        "bin-dir": "vendor/bin",
         "minimum-stability": "dev"
     },
     "require": {
-        "php": ">=5.0.0",
+        "php": ">=5.3.0",
         "ext-curl": "*",
         "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "vlucas/phpdotenv": "*",
+        "codeclimate/php-test-reporter": "dev-master",
+        "satooshi/php-coveralls": "*",
+        "codacy/coverage": "dev-master"
     },
     "autoload": {
         "psr-4": {"Detain\\Litespeed\\": "src/"}
