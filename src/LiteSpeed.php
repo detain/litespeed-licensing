@@ -36,11 +36,11 @@ class LiteSpeed {
 	public function __construct($login, $password) {
 		$this->login = $login;
 		$this->password = $password;
-		$this->reset_params();
+		$this->resetParams();
 		function_requirements('xml2array');
 	}
 
-	public function reset_params() {
+	public function resetParams() {
 		$this->params = [];
 		$this->params['litespeed_store_login'] = rawurlencode($this->login);
 		$this->params['litespeed_store_pass'] = rawurlencode($this->password);
@@ -319,16 +319,9 @@ class LiteSpeed {
 		}
 		myadmin_log('licenses', 'info', "LiteSpeed URL: $url\npstring: $pstring\n", __LINE__, __FILE__);
 		curl_setopt($ch, CURLOPT_URL, $url);
-
-		// Turn off the server and peer verification (TrustManager Concept).
-		//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
 		// Get response from the server.
 		$this->rawResponse = curl_exec($ch);
-
 		if (!$this->rawResponse) {
 			$this->error[] = 'There was some error in connecting to Softaculous. This may be because of no internet connectivity at your end.';
 			return false;
@@ -358,7 +351,7 @@ class LiteSpeed {
 			$r = $this->error;
 		}
 		echo '<pre>';
-		print_r($r);
+		var_export($r);
 		echo '</pre>';
 	}
 
