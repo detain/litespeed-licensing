@@ -153,14 +153,14 @@ class LiteSpeed {
 
 	/**
 	 * @param bool   $serial
-	 * @param bool   $ip
+	 * @param bool   $ipAddress
 	 * @param string $now
 	 * @param bool   $reason
 	 * @return mixed
 	 */
-	public function cancel($serial = false, $ip = false, $now = 'Y', $reason = false) {
+	public function cancel($serial = false, $ipAddress = false, $now = 'Y', $reason = false) {
 		$this->params['license_serial'] = $serial;
-		$this->params['server_ip'] = $ip;
+		$this->params['server_ip'] = $ipAddress;
 		$this->params['cancel_now'] = $now;
 		$this->params['cancel_reason'] = $reason;
 		return $this->req('Cancel');
@@ -168,12 +168,12 @@ class LiteSpeed {
 
 	/**
 	 * @param $serial
-	 * @param $ip
+	 * @param $ipAddress
 	 * @return mixed
 	 */
-	public function release($serial, $ip) {
+	public function release($serial, $ipAddress) {
 		$this->params['license_serial'] = $serial;
-		$this->params['server_ip'] = $ip;
+		$this->params['server_ip'] = $ipAddress;
 		return $this->req('ReleaseLicense');
 	}
 
@@ -187,16 +187,16 @@ class LiteSpeed {
 	 *  license off your future invoices.
 	 *
 	 * @param mixed $serial optional (if you specify IP , but this is preferred) serial of the license
-	 * @param mixed $ip optional (if you specify serial) ip of the license, specifying bothserial and ip gives extra validation
+	 * @param mixed $ipAddress optional (if you specify serial) ip of the license, specifying bothserial and ip gives extra validation
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function suspend($serial = false, $ip = false, $reason = false) {
+	public function suspend($serial = false, $ipAddress = false, $reason = false) {
 		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ip !== false) {
-			$this->params['server_ip'] = $ip;
+		if ($ipAddress !== false) {
+			$this->params['server_ip'] = $ipAddress;
 		}
 		if ($reason !== false) {
 			$this->params['reason'] = $reason;
@@ -208,16 +208,16 @@ class LiteSpeed {
 	 * Unsuspend a license.
 	 *
 	 * @param mixed $serial optional (if you specify IP , but this is preferred) serial of the license
-	 * @param mixed $ip optional (if you specify serial) ip of the license, specifying bothserial and ip gives extra validation
+	 * @param mixed $ipAddress optional (if you specify serial) ip of the license, specifying bothserial and ip gives extra validation
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function unsuspend($serial = false, $ip = false, $reason = false) {
+	public function unsuspend($serial = false, $ipAddress = false, $reason = false) {
 		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ip !== false) {
-			$this->params['server_ip'] = $ip;
+		if ($ipAddress !== false) {
+			$this->params['server_ip'] = $ipAddress;
 		}
 		if ($reason !== false) {
 			$this->params['reason'] = $reason;
@@ -227,18 +227,18 @@ class LiteSpeed {
 
 	/**
 	 * @param bool   $serial
-	 * @param bool   $ip
+	 * @param bool   $ipAddress
 	 * @param        $cpu
 	 * @param string $payment
 	 * @param bool   $cvv
 	 * @return array|mixed
 	 */
-	public function upgrade($serial = false, $ip = false, $cpu, $payment = 'credit', $cvv = false) {
+	public function upgrade($serial = false, $ipAddress = false, $cpu, $payment = 'credit', $cvv = false) {
 		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ip !== false) {
-			$this->params['server_ip'] = $ip;
+		if ($ipAddress !== false) {
+			$this->params['server_ip'] = $ipAddress;
 		}
 		if (!in_array($cpu, $this->valid_cpu)) {
 			return array('error' => 'Invalid CPU');
