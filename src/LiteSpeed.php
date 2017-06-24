@@ -18,7 +18,7 @@ class LiteSpeed {
 
 	public $login = '';
 	public $password = '';
-	public $usePost = true;
+	public $usePost = TRUE;
 	public $url = 'https://store.litespeedtech.com/reseller/LiteSpeed_eService.php';
 	public $version = '1.1';
 	public $params = [];
@@ -123,7 +123,7 @@ class LiteSpeed {
 	 * 			),
 	 * 		)
 	 */
-	public function order($product, $cpu = false, $period = 'monthly', $payment = 'credit', $cvv = false, $promocode = false) {
+	public function order($product, $cpu = FALSE, $period = 'monthly', $payment = 'credit', $cvv = FALSE, $promocode = FALSE) {
 		if (!in_array($product, $this->validProducts)) {
 			return array('error' => 'Invalid Product');
 		}
@@ -142,10 +142,10 @@ class LiteSpeed {
 		}
 		$this->params['order_period'] = $period;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== false) {
+		if ($cvv !== FALSE) {
 			$this->params['order_cvv'] = $cvv;
 		}
-		if ($promocode !== false) {
+		if ($promocode !== FALSE) {
 			$this->params['order_promocode'] = $promocode;
 		}
 		return $this->req('Order');
@@ -158,7 +158,7 @@ class LiteSpeed {
 	 * @param bool   $reason
 	 * @return mixed
 	 */
-	public function cancel($serial = false, $ipAddress = false, $now = 'Y', $reason = false) {
+	public function cancel($serial = FALSE, $ipAddress = FALSE, $now = 'Y', $reason = FALSE) {
 		$this->params['license_serial'] = $serial;
 		$this->params['server_ip'] = $ipAddress;
 		$this->params['cancel_now'] = $now;
@@ -191,14 +191,14 @@ class LiteSpeed {
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function suspend($serial = false, $ipAddress = false, $reason = false) {
-		if ($serial !== false) {
+	public function suspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
+		if ($serial !== FALSE) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ipAddress !== false) {
+		if ($ipAddress !== FALSE) {
 			$this->params['server_ip'] = $ipAddress;
 		}
-		if ($reason !== false) {
+		if ($reason !== FALSE) {
 			$this->params['reason'] = $reason;
 		}
 		return $this->req('Suspend');
@@ -212,14 +212,14 @@ class LiteSpeed {
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function unsuspend($serial = false, $ipAddress = false, $reason = false) {
-		if ($serial !== false) {
+	public function unsuspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
+		if ($serial !== FALSE) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ipAddress !== false) {
+		if ($ipAddress !== FALSE) {
 			$this->params['server_ip'] = $ipAddress;
 		}
-		if ($reason !== false) {
+		if ($reason !== FALSE) {
 			$this->params['reason'] = $reason;
 		}
 		return $this->req('Unsuspend');
@@ -233,11 +233,11 @@ class LiteSpeed {
 	 * @param bool   $cvv
 	 * @return array|mixed
 	 */
-	public function upgrade($serial = false, $ipAddress = false, $cpu, $payment = 'credit', $cvv = false) {
-		if ($serial !== false) {
+	public function upgrade($serial = FALSE, $ipAddress = FALSE, $cpu, $payment = 'credit', $cvv = FALSE) {
+		if ($serial !== FALSE) {
 			$this->params['license_serial'] = $serial;
 		}
-		if ($ipAddress !== false) {
+		if ($ipAddress !== FALSE) {
 			$this->params['server_ip'] = $ipAddress;
 		}
 		if (!in_array($cpu, $this->validCpu)) {
@@ -248,7 +248,7 @@ class LiteSpeed {
 		}
 		$this->params['upgrade_cpu'] = $cpu;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== false) {
+		if ($cvv !== FALSE) {
 			$this->params['order_cvv'] = $cvv;
 		}
 		return $this->req('Upgrade');
@@ -285,7 +285,7 @@ class LiteSpeed {
 	 *
 	 * @param mixed $post TRUE for POST , FALSE for GET requests		*
 	 */
-	public function usePost($post = true) {
+	public function usePost($post = TRUE) {
 		$this->usePost = $post;
 	}
 
@@ -300,8 +300,8 @@ class LiteSpeed {
 		// Set the curl parameters.
 		$ch = curl_init();
 		$url = $this->url;
-		if ($this->usePost !== false) {
-			curl_setopt($ch, CURLOPT_POST, true);
+		if ($this->usePost !== FALSE) {
+			curl_setopt($ch, CURLOPT_POST, TRUE);
 			$pstring = '';
 			foreach ($this->params as $param => $value) {
 				$pstring .= '&'.$param.'='.$value.'';
@@ -309,7 +309,7 @@ class LiteSpeed {
 			$pstring = mb_substr($pstring, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $pstring);
 		} else {
-			curl_setopt($ch, CURLOPT_POST, false);
+			curl_setopt($ch, CURLOPT_POST, FALSE);
 			$pstring = '';
 			foreach ($this->params as $param => $value) {
 				$pstring .= '&'.$param.'='.$value.'';
@@ -324,18 +324,18 @@ class LiteSpeed {
 		$this->rawResponse = curl_exec($ch);
 		if (!$this->rawResponse) {
 			$this->error[] = 'There was some error in connecting to Softaculous. This may be because of no internet connectivity at your end.';
-			return false;
+			return FALSE;
 		}
 
 		// Extract the response details.
 		$this->response = xml2array($this->rawResponse);
-		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, true), __LINE__, __FILE__);
+		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, TRUE), __LINE__, __FILE__);
 		if (empty($this->response['error'])) {
 			unset($this->response['error']);
 			return $this->response;
 		} else {
 			$this->error = array_merge($this->error, $this->response['error']);
-			return false;
+			return FALSE;
 		}
 
 	}
