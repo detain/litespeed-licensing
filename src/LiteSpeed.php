@@ -18,15 +18,15 @@ class LiteSpeed {
 
 	public $login = '';
 	public $password = '';
-	public $use_post = true;
+	public $usePost = true;
 	public $url = 'https://store.litespeedtech.com/reseller/LiteSpeed_eService.php';
 	public $version = '1.1';
 	public $params = [];
 	public $response = [];
-	public $valid_products = ['LSWS', 'LSLB'];
-	public $valid_cpu = ['1', '2', '4', '8', 'V', 'U'];
-	public $valid_period = ['monthly', 'yearly', 'owned'];
-	public $valid_payment = ['credit', 'creditcard'];
+	public $validProducts = ['LSWS', 'LSLB'];
+	public $validCpu = ['1', '2', '4', '8', 'V', 'U'];
+	public $validPeriod = ['monthly', 'yearly', 'owned'];
+	public $validPayment = ['credit', 'creditcard'];
 	public $rawResponse;
 
 	/**
@@ -124,16 +124,16 @@ class LiteSpeed {
 	 * 		)
 	 */
 	public function order($product, $cpu = false, $period = 'monthly', $payment = 'credit', $cvv = false, $promocode = false) {
-		if (!in_array($product, $this->valid_products)) {
+		if (!in_array($product, $this->validProducts)) {
 			return array('error' => 'Invalid Product');
 		}
-		if ($product == 'LSWS' && !in_array($cpu, $this->valid_cpu)) {
+		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu)) {
 			return array('error' => 'Invalid CPU');
 		}
-		if (!in_array($period, $this->valid_period)) {
+		if (!in_array($period, $this->validPeriod)) {
 			return array('error' => 'Invalid Billing Period');
 		}
-		if (!in_array($payment, $this->valid_payment)) {
+		if (!in_array($payment, $this->validPayment)) {
 			return array('error' => 'Invalid Payment Method');
 		}
 		$this->params['order_product'] = $product;
@@ -240,10 +240,10 @@ class LiteSpeed {
 		if ($ipAddress !== false) {
 			$this->params['server_ip'] = $ipAddress;
 		}
-		if (!in_array($cpu, $this->valid_cpu)) {
+		if (!in_array($cpu, $this->validCpu)) {
 			return array('error' => 'Invalid CPU');
 		}
-		if (!in_array($payment, $this->valid_payment)) {
+		if (!in_array($payment, $this->validPayment)) {
 			return array('error' => 'Invalid Payment Method');
 		}
 		$this->params['upgrade_cpu'] = $cpu;
@@ -285,8 +285,8 @@ class LiteSpeed {
 	 *
 	 * @param mixed $post TRUE for POST , FALSE for GET requests		*
 	 */
-	public function use_post($post = true) {
-		$this->use_post = $post;
+	public function usePost($post = true) {
+		$this->usePost = $post;
 	}
 
 	/**
@@ -300,7 +300,7 @@ class LiteSpeed {
 		// Set the curl parameters.
 		$ch = curl_init();
 		$url = $this->url;
-		if ($this->use_post !== false) {
+		if ($this->usePost !== false) {
 			curl_setopt($ch, CURLOPT_POST, true);
 			$pstring = '';
 			foreach ($this->params as $param => $value) {
