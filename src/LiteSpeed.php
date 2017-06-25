@@ -346,7 +346,7 @@ class LiteSpeed {
 	 * @param mixed $r
 	 * @return void
 	 */
-	public function r($r) {
+	public function displayResponse$r) {
 		if (empty($r)) {
 			$r = $this->error;
 		}
