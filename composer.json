@@ -1,7 +1,7 @@
 {
     "name": "detain/litespeed-licensing",
     "type": "library",
-    "description": "Litespeed Licensing Class",
+    "description": "LiteSpeed Licensing Class",
     "keywords": ["litespeed","administration","license"],
     "license": "LGPL-2.1",
     "authors": [
@@ -27,6 +27,6 @@
         "codacy/coverage": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Detain\\Litespeed\\": "src/"}
+        "psr-4": {"Detain\\LiteSpeed\\": "src/"}
     }
 }

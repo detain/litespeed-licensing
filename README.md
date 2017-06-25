@@ -1,6 +1,6 @@
-# Litespeed Licensing Class
+# LiteSpeed Licensing Class
 
-Litespeed Licensing Class
+LiteSpeed Licensing Class
 
 ## Build Status and Code Analysis
 
@@ -24,5 +24,5 @@ composer require detain/litespeed-licensing
 
 ## License
 
-The Litespeed Licensing Class class is licensed under the LGPL-v2 license.
+The LiteSpeed Licensing Class class is licensed under the LGPL-v2 license.
 

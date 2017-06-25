@@ -9,6 +9,8 @@
  * @category Licenses
  */
 
+namespace Detain\LiteSpeed;
+
 /**
  * LiteSpeed
  *
