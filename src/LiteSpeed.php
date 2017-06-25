@@ -341,15 +341,15 @@ class LiteSpeed {
 	}
 
 	/**
-	 * LiteSpeed::r()
+	 * displays the response
 	 *
-	 * @param mixed $r
+	 * @param mixed $response the response from an a function/api command
 	 * @return void
 	 */
-	public function displayResponse($r) {
-		if (empty($r))
-			$r = $this->error;
-		echo '<pre>'.json_encode($r, JSON_PRETTY_PRINT).'</pre>';
+	public function displayResponse($response) {
+		if (empty($response))
+			$response = $this->error;
+		echo '<pre>'.json_encode($response, JSON_PRETTY_PRINT).'</pre>';
 	}
 
 }
