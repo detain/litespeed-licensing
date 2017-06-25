@@ -349,7 +349,7 @@ class LiteSpeed {
 	public function displayResponse($r) {
 		if (empty($r))
 			$r = $this->error;
-		echo '<pre>'.json_encode($r, JSON_PRETTY_PRINT) . '</pre>';
+		echo '<pre>'.json_encode($r, JSON_PRETTY_PRINT).'</pre>';
 	}
 
 }
