@@ -346,13 +346,10 @@ class LiteSpeed {
 	 * @param mixed $r
 	 * @return void
 	 */
-	public function displayResponse$r) {
-		if (empty($r)) {
+	public function displayResponse($r) {
+		if (empty($r))
 			$r = $this->error;
-		}
-		echo '<pre>';
-		var_export($r);
-		echo '</pre>';
+		echo '<pre>' . json_encode($r, JSON_PRETTY_PRINT) . '</pre>';
 	}
 
 }
