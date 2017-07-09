@@ -3,7 +3,6 @@
  * LiteSpeed Licensing
  * Last Changed: $LastChangedDate: 2017-05-31 04:54:09 -0400 (Wed, 31 May 2017) $
  * @author detain
- * @version $Revision: 24934 $
  * @copyright 2017
  * @package MyAdmin
  * @category Licenses
