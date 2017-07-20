@@ -126,16 +126,16 @@ class LiteSpeed {
 	 */
 	public function order($product, $cpu = FALSE, $period = 'monthly', $payment = 'credit', $cvv = FALSE, $promocode = FALSE) {
 		if (!in_array($product, $this->validProducts)) {
-			return array('error' => 'Invalid Product');
+			return ['error' => 'Invalid Product'];
 		}
 		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu)) {
-			return array('error' => 'Invalid CPU');
+			return ['error' => 'Invalid CPU'];
 		}
 		if (!in_array($period, $this->validPeriod)) {
-			return array('error' => 'Invalid Billing Period');
+			return ['error' => 'Invalid Billing Period'];
 		}
 		if (!in_array($payment, $this->validPayment)) {
-			return array('error' => 'Invalid Payment Method');
+			return ['error' => 'Invalid Payment Method'];
 		}
 		$this->params['order_product'] = $product;
 		if ($product != 'LSLB') {
@@ -242,10 +242,10 @@ class LiteSpeed {
 			$this->params['server_ip'] = $ipAddress;
 		}
 		if (!in_array($cpu, $this->validCpu)) {
-			return array('error' => 'Invalid CPU');
+			return ['error' => 'Invalid CPU'];
 		}
 		if (!in_array($payment, $this->validPayment)) {
-			return array('error' => 'Invalid Payment Method');
+			return ['error' => 'Invalid Payment Method'];
 		}
 		$this->params['upgrade_cpu'] = $cpu;
 		$this->params['order_payment'] = $payment;
