@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Detain\\LiteSpeed\\": "src\/"
+            "Detain\\LiteSpeed\\": "src/"
         }
     }
 }
