@@ -1,8 +1,7 @@
 <?php
 /**
  * LiteSpeed Licensing
- * Last Changed: $LastChangedDate: 2017-05-31 04:54:09 -0400 (Wed, 31 May 2017) $
- * @author detain
+ * @author Joe Huss <detain@interserver.net>
  * @copyright 2017
  * @package MyAdmin
  * @category Licenses
