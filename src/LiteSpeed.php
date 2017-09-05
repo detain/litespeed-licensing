@@ -124,30 +124,23 @@ class LiteSpeed {
 	 * 		)
 	 */
 	public function order($product, $cpu = FALSE, $period = 'monthly', $payment = 'credit', $cvv = FALSE, $promocode = FALSE) {
-		if (!in_array($product, $this->validProducts)) {
+		if (!in_array($product, $this->validProducts))
 			return ['error' => 'Invalid Product'];
-		}
-		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu)) {
+		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu))
 			return ['error' => 'Invalid CPU'];
-		}
-		if (!in_array($period, $this->validPeriod)) {
+		if (!in_array($period, $this->validPeriod))
 			return ['error' => 'Invalid Billing Period'];
-		}
-		if (!in_array($payment, $this->validPayment)) {
+		if (!in_array($payment, $this->validPayment))
 			return ['error' => 'Invalid Payment Method'];
-		}
 		$this->params['order_product'] = $product;
-		if ($product != 'LSLB') {
+		if ($product != 'LSLB')
 			$this->params['order_cpu'] = $cpu;
-		}
 		$this->params['order_period'] = $period;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== FALSE) {
+		if ($cvv !== FALSE)
 			$this->params['order_cvv'] = $cvv;
-		}
-		if ($promocode !== FALSE) {
+		if ($promocode !== FALSE)
 			$this->params['order_promocode'] = $promocode;
-		}
 		return $this->req('Order');
 	}
 
@@ -192,15 +185,12 @@ class LiteSpeed {
 	 * @return mixed
 	 */
 	public function suspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
-		if ($serial !== FALSE) {
+		if ($serial !== FALSE)
 			$this->params['license_serial'] = $serial;
-		}
-		if ($ipAddress !== FALSE) {
+		if ($ipAddress !== FALSE)
 			$this->params['server_ip'] = $ipAddress;
-		}
-		if ($reason !== FALSE) {
+		if ($reason !== FALSE)
 			$this->params['reason'] = $reason;
-		}
 		return $this->req('Suspend');
 	}
 
@@ -213,15 +203,12 @@ class LiteSpeed {
 	 * @return mixed
 	 */
 	public function unsuspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
-		if ($serial !== FALSE) {
+		if ($serial !== FALSE)
 			$this->params['license_serial'] = $serial;
-		}
-		if ($ipAddress !== FALSE) {
+		if ($ipAddress !== FALSE)
 			$this->params['server_ip'] = $ipAddress;
-		}
-		if ($reason !== FALSE) {
+		if ($reason !== FALSE)
 			$this->params['reason'] = $reason;
-		}
 		return $this->req('Unsuspend');
 	}
 
@@ -234,23 +221,18 @@ class LiteSpeed {
 	 * @return array|mixed
 	 */
 	public function upgrade($serial = FALSE, $ipAddress = FALSE, $cpu, $payment = 'credit', $cvv = FALSE) {
-		if ($serial !== FALSE) {
+		if ($serial !== FALSE)
 			$this->params['license_serial'] = $serial;
-		}
-		if ($ipAddress !== FALSE) {
+		if ($ipAddress !== FALSE)
 			$this->params['server_ip'] = $ipAddress;
-		}
-		if (!in_array($cpu, $this->validCpu)) {
+		if (!in_array($cpu, $this->validCpu))
 			return ['error' => 'Invalid CPU'];
-		}
-		if (!in_array($payment, $this->validPayment)) {
+		if (!in_array($payment, $this->validPayment))
 			return ['error' => 'Invalid Payment Method'];
-		}
 		$this->params['upgrade_cpu'] = $cpu;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== FALSE) {
+		if ($cvv !== FALSE)
 			$this->params['order_cvv'] = $cvv;
-		}
 		return $this->req('Upgrade');
 	}
 
@@ -303,17 +285,15 @@ class LiteSpeed {
 		if ($this->usePost !== FALSE) {
 			curl_setopt($ch, CURLOPT_POST, TRUE);
 			$pstring = '';
-			foreach ($this->params as $param => $value) {
+			foreach ($this->params as $param => $value)
 				$pstring .= '&'.$param.'='.$value.'';
-			}
 			$pstring = mb_substr($pstring, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $pstring);
 		} else {
 			curl_setopt($ch, CURLOPT_POST, FALSE);
 			$pstring = '';
-			foreach ($this->params as $param => $value) {
+			foreach ($this->params as $param => $value)
 				$pstring .= '&'.$param.'='.$value.'';
-			}
 			$pstring = mb_substr($pstring, 1);
 			$url .= '?'.$pstring;
 		}
