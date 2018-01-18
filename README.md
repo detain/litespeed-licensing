@@ -24,5 +24,5 @@ composer require detain/litespeed-licensing
 
 ## License
 
-The LiteSpeed Licensing Class class is licensed under the LGPL-v2 license.
+The LiteSpeed Licensing Class class is licensed under the LGPL-v2.1 license.
 
