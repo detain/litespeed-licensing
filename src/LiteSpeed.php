@@ -14,11 +14,11 @@ namespace Detain\LiteSpeed;
  *
  * @access public
  */
-class LiteSpeed {
-
+class LiteSpeed
+{
 	public $login = '';
 	public $password = '';
-	public $usePost = TRUE;
+	public $usePost = true;
 	public $url = 'https://store.litespeedtech.com/reseller/LiteSpeed_eService.php';
 	public $version = '1.1';
 	public $params = [];
@@ -33,14 +33,16 @@ class LiteSpeed {
 	 * @param $login
 	 * @param $password
 	 */
-	public function __construct($login, $password) {
+	public function __construct($login, $password)
+	{
 		$this->login = $login;
 		$this->password = $password;
 		$this->resetParams();
 		function_requirements('xml2array');
 	}
 
-	public function resetParams() {
+	public function resetParams()
+	{
 		$this->params = [];
 		$this->params['litespeed_store_login'] = rawurlencode($this->login);
 		$this->params['litespeed_store_pass'] = rawurlencode($this->password);
@@ -50,7 +52,8 @@ class LiteSpeed {
 	/**
 	 * @return mixed
 	 */
-	public function ping() {
+	public function ping()
+	{
 		return $this->req('Ping');
 	}
 
@@ -123,24 +126,32 @@ class LiteSpeed {
 	 * 			),
 	 * 		)
 	 */
-	public function order($product, $cpu = FALSE, $period = 'monthly', $payment = 'credit', $cvv = FALSE, $promocode = FALSE) {
-		if (!in_array($product, $this->validProducts))
+	public function order($product, $cpu = false, $period = 'monthly', $payment = 'credit', $cvv = false, $promocode = false)
+	{
+		if (!in_array($product, $this->validProducts)) {
 			return ['error' => 'Invalid Product'];
-		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu))
+		}
+		if ($product == 'LSWS' && !in_array($cpu, $this->validCpu)) {
 			return ['error' => 'Invalid CPU'];
-		if (!in_array($period, $this->validPeriod))
+		}
+		if (!in_array($period, $this->validPeriod)) {
 			return ['error' => 'Invalid Billing Period'];
-		if (!in_array($payment, $this->validPayment))
+		}
+		if (!in_array($payment, $this->validPayment)) {
 			return ['error' => 'Invalid Payment Method'];
+		}
 		$this->params['order_product'] = $product;
-		if ($product != 'LSLB')
+		if ($product != 'LSLB') {
 			$this->params['order_cpu'] = $cpu;
+		}
 		$this->params['order_period'] = $period;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== FALSE)
+		if ($cvv !== false) {
 			$this->params['order_cvv'] = $cvv;
-		if ($promocode !== FALSE)
+		}
+		if ($promocode !== false) {
 			$this->params['order_promocode'] = $promocode;
+		}
 		return $this->req('Order');
 	}
 
@@ -151,7 +162,8 @@ class LiteSpeed {
 	 * @param bool   $reason
 	 * @return mixed
 	 */
-	public function cancel($serial = FALSE, $ipAddress = FALSE, $now = 'Y', $reason = FALSE) {
+	public function cancel($serial = false, $ipAddress = false, $now = 'Y', $reason = false)
+	{
 		$this->params['license_serial'] = $serial;
 		$this->params['server_ip'] = $ipAddress;
 		$this->params['cancel_now'] = $now;
@@ -164,7 +176,8 @@ class LiteSpeed {
 	 * @param $ipAddress
 	 * @return mixed
 	 */
-	public function release($serial, $ipAddress) {
+	public function release($serial, $ipAddress)
+	{
 		$this->params['license_serial'] = $serial;
 		$this->params['server_ip'] = $ipAddress;
 		return $this->req('ReleaseLicense');
@@ -184,13 +197,17 @@ class LiteSpeed {
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function suspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
-		if ($serial !== FALSE)
+	public function suspend($serial = false, $ipAddress = false, $reason = false)
+	{
+		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
-		if ($ipAddress !== FALSE)
+		}
+		if ($ipAddress !== false) {
 			$this->params['server_ip'] = $ipAddress;
-		if ($reason !== FALSE)
+		}
+		if ($reason !== false) {
 			$this->params['reason'] = $reason;
+		}
 		return $this->req('Suspend');
 	}
 
@@ -202,13 +219,17 @@ class LiteSpeed {
 	 * @param mixed $reason optional reason for suspend/unsuspend
 	 * @return mixed
 	 */
-	public function unsuspend($serial = FALSE, $ipAddress = FALSE, $reason = FALSE) {
-		if ($serial !== FALSE)
+	public function unsuspend($serial = false, $ipAddress = false, $reason = false)
+	{
+		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
-		if ($ipAddress !== FALSE)
+		}
+		if ($ipAddress !== false) {
 			$this->params['server_ip'] = $ipAddress;
-		if ($reason !== FALSE)
+		}
+		if ($reason !== false) {
 			$this->params['reason'] = $reason;
+		}
 		return $this->req('Unsuspend');
 	}
 
@@ -220,19 +241,25 @@ class LiteSpeed {
 	 * @param bool   $cvv
 	 * @return array|mixed
 	 */
-	public function upgrade($serial = FALSE, $ipAddress = FALSE, $cpu, $payment = 'credit', $cvv = FALSE) {
-		if ($serial !== FALSE)
+	public function upgrade($serial = false, $ipAddress = false, $cpu, $payment = 'credit', $cvv = false)
+	{
+		if ($serial !== false) {
 			$this->params['license_serial'] = $serial;
-		if ($ipAddress !== FALSE)
+		}
+		if ($ipAddress !== false) {
 			$this->params['server_ip'] = $ipAddress;
-		if (!in_array($cpu, $this->validCpu))
+		}
+		if (!in_array($cpu, $this->validCpu)) {
 			return ['error' => 'Invalid CPU'];
-		if (!in_array($payment, $this->validPayment))
+		}
+		if (!in_array($payment, $this->validPayment)) {
 			return ['error' => 'Invalid Payment Method'];
+		}
 		$this->params['upgrade_cpu'] = $cpu;
 		$this->params['order_payment'] = $payment;
-		if ($cvv !== FALSE)
+		if ($cvv !== false) {
 			$this->params['order_cvv'] = $cvv;
+		}
 		return $this->req('Upgrade');
 	}
 
@@ -240,7 +267,8 @@ class LiteSpeed {
 	 * @param $field
 	 * @return mixed
 	 */
-	public function query($field) {
+	public function query($field)
+	{
 		/**
 		 * query_field – Currently supported values:
 		 *	 	“AllActiveLicenses”
@@ -267,7 +295,8 @@ class LiteSpeed {
 	 *
 	 * @param mixed $post TRUE for POST , FALSE for GET requests		*
 	 */
-	public function usePost($post = TRUE) {
+	public function usePost($post = true)
+	{
 		$this->usePost = $post;
 	}
 
@@ -277,23 +306,26 @@ class LiteSpeed {
 	 * @param string $action Can be one of Ping, Order, Cancel, ReleaseLicense, Suspend, Unsuspend, Upgrade, or Query
 	 * @return mixed
 	 */
-	public function req($action) {
+	public function req($action)
+	{
 		$this->params['eService_action'] = rawurlencode($action);
 		// Set the curl parameters.
 		$ch = curl_init();
 		$url = $this->url;
-		if ($this->usePost !== FALSE) {
-			curl_setopt($ch, CURLOPT_POST, TRUE);
+		if ($this->usePost !== false) {
+			curl_setopt($ch, CURLOPT_POST, true);
 			$pstring = '';
-			foreach ($this->params as $param => $value)
+			foreach ($this->params as $param => $value) {
 				$pstring .= '&'.$param.'='.$value.'';
+			}
 			$pstring = mb_substr($pstring, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $pstring);
 		} else {
-			curl_setopt($ch, CURLOPT_POST, FALSE);
+			curl_setopt($ch, CURLOPT_POST, false);
 			$pstring = '';
-			foreach ($this->params as $param => $value)
+			foreach ($this->params as $param => $value) {
 				$pstring .= '&'.$param.'='.$value.'';
+			}
 			$pstring = mb_substr($pstring, 1);
 			$url .= '?'.$pstring;
 		}
@@ -304,20 +336,19 @@ class LiteSpeed {
 		$this->rawResponse = curl_exec($ch);
 		if (!$this->rawResponse) {
 			$this->error[] = 'There was some error in connecting to Softaculous. This may be because of no internet connectivity at your end.';
-			return FALSE;
+			return false;
 		}
 
 		// Extract the response details.
 		$this->response = xml2array($this->rawResponse);
-		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, TRUE), __LINE__, __FILE__);
+		myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, true), __LINE__, __FILE__);
 		if (empty($this->response['error'])) {
 			unset($this->response['error']);
 			return $this->response;
 		} else {
 			$this->error = array_merge($this->error, $this->response['error']);
-			return FALSE;
+			return false;
 		}
-
 	}
 
 	/**
@@ -326,10 +357,11 @@ class LiteSpeed {
 	 * @param mixed $response the response from an a function/api command
 	 * @return void
 	 */
-	public function displayResponse($response) {
-		if (empty($response))
+	public function displayResponse($response)
+	{
+		if (empty($response)) {
 			$response = $this->error;
+		}
 		echo '<pre>'.json_encode($response, JSON_PRETTY_PRINT).'</pre>';
 	}
-
 }
