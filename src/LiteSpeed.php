@@ -308,6 +308,8 @@ class LiteSpeed
      */
     public function req($action)
     {
+        require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+        
         $this->params['eService_action'] = rawurlencode($action);
         // Set the curl parameters.
         $ch = curl_init();
@@ -333,9 +335,12 @@ class LiteSpeed
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // Get response from the server.
+        \StatisticClient::tick('LiteSpeed', $action);
         $this->rawResponse = curl_exec($ch);
         if (!$this->rawResponse) {
-            $this->error[] = 'There was some error in connecting to Softaculous. This may be because of no internet connectivity at your end.';
+            $error = 'There was some error in connecting to LiteSpeed. This may be because of no internet connectivity at your end.';
+            $this->error[] = $error;
+            \StatisticClient::report('LiteSpeed', $action, false, 1, $error, STATISTICS_SERVER);
             return false;
         }
 
@@ -344,9 +349,11 @@ class LiteSpeed
         myadmin_log('licenses', 'info', 'LiteSpeed Response '.var_export($this->response, true), __LINE__, __FILE__);
         if (empty($this->response['error'])) {
             unset($this->response['error']);
+            \StatisticClient::report('LiteSpeed', $action, true, 0, '', STATISTICS_SERVER);
             return $this->response;
         } else {
             $this->error = array_merge($this->error, $this->response['error']);
+            \StatisticClient::report('LiteSpeed', $action, false, 1, $this->response['error'], STATISTICS_SERVER);
             return false;
         }
     }
