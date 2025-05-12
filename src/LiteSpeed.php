@@ -236,12 +236,12 @@ class LiteSpeed
     /**
      * @param bool   $serial
      * @param bool   $ipAddress
-     * @param        $cpu
+     * @param mixed $cpu What kind of license. Available values: "1": 1-CPU license, "2": 2-CPU license,  "4": 4-CPU license, "8": 8-CPU license, "V": VPS license, "U": Ultra-VPS license (Available LSWS 4.2.2 and above.), If <order_product> is "LSLB", <order_cpu> is not required.
      * @param string $payment
      * @param bool   $cvv
      * @return array|mixed
      */
-    public function upgrade($serial = false, $ipAddress = false, $cpu, $payment = 'credit', $cvv = false)
+    public function upgrade($serial = false, $ipAddress = false, $cpu = false, $payment = 'credit', $cvv = false)
     {
         if ($serial !== false) {
             $this->params['license_serial'] = $serial;
