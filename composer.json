@@ -4,8 +4,25 @@
 	"description": "LiteSpeed Licensing Class",
 	"keywords": [
 		"litespeed",
-		"administration",
-		"license"
+		"litespeed-web-server",
+		"litespeed-enterprise",
+		"lsws",
+		"license",
+		"software-license",
+		"software-licensing",
+		"licensing",
+		"api",
+		"automation",
+		"billing",
+		"cloudlinux",
+		"reseller",
+		"server",
+		"subscription",
+		"web-hosting",
+		"web-server",
+		"whm",
+		"whmcs",
+		"administration"
 	],
 	"license": "LGPL-2.1-only",
 	"authors": [
